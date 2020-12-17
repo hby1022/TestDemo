@@ -1,0 +1,50 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 2000
+      min-spare: 30
+  port: 7788
+  servlet:
+    context-path: /transpeed_bus
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/parkingspaceinquiry_sebusstation?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false
+      username: root
+      password: runwell
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      #Oracle需要打开注释
+      #validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
+
+
+  mvc:
+    static-path-pattern: /image/**
+  resources:
+    static-locations: file:D:/Image_bus/
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transpeed.park.mapper.ParkingInfoMapper">
+  <resultMap id="BaseResultMap" type="com.transpeed.park.entity.ParkingInfo">
+    <id column="SN" jdbcType="BIGINT" property="sn" />
+    <result column="Area" jdbcType="CHAR" property="area" />
+    <result column="ParkingNo" jdbcType="VARCHAR" property="parkingno" />
+    <result column="LPNRType" jdbcType="CHAR" property="lpnrtype" />
+    <result column="IPCPosition" jdbcType="CHAR" property="ipcposition" />
+    <result column="MacNo" jdbcType="VARCHAR" property="macno" />
+    <result column="MacIP" jdbcType="VARCHAR" property="macip" />
+    <result column="CarExist" jdbcType="CHAR" property="carexist" />
+    <result column="PlateColor" jdbcType="CHAR" property="platecolor" />
+    <result column="Plate" jdbcType="VARCHAR" property="plate" />
+    <result column="LastInfoTime" jdbcType="TIMESTAMP" property="lastinfotime" />
+    <result column="LastRefreshTime" jdbcType="TIMESTAMP" property="lastrefreshtime" />
+    <result column="Image" jdbcType="VARCHAR" property="image" />
+    <result column="Remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SN, Area, ParkingNo, LPNRType, IPCPosition, MacNo, MacIP, CarExist, PlateColor, Plate,
+    LastInfoTime, LastRefreshTime, Image, Remark
+  </sql>
+
+  <select id="selectByMacNoAndPlate" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from parkinginfo_table
+    where MacNo = #{device_id}  order by LastRefreshTime desc limit 1
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.transpeed.park.entity.ParkingInfo">
+    update parkinginfo_table
+    <set>
+      <if test="area != null">
+        Area = #{area,jdbcType=CHAR},
+      </if>
+      <if test="parkingno != null">
+        ParkingNo = #{parkingno,jdbcType=VARCHAR},
+      </if>
+      <if test="lpnrtype != null">
+        LPNRType = #{lpnrtype,jdbcType=CHAR},
+      </if>
+      <if test="ipcposition != null">
+        IPCPosition = #{ipcposition,jdbcType=CHAR},
+      </if>
+      <if test="macno != null">
+        MacNo = #{macno,jdbcType=VARCHAR},
+      </if>
+      <if test="macip != null">
+        MacIP = #{macip,jdbcType=VARCHAR},
+      </if>
+      <if test="carexist != null">
+        CarExist = #{carexist,jdbcType=CHAR},
+      </if>
+      <if test="platecolor != null">
+        PlateColor = #{platecolor,jdbcType=CHAR},
+      </if>
+      <if test="plate != null">
+        Plate = #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastinfotime != null">
+        LastInfoTime = #{lastinfotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastrefreshtime != null">
+        LastRefreshTime = #{lastrefreshtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null">
+        Image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SN = #{sn,jdbcType=BIGINT}
+  </update>
+</mapper>
